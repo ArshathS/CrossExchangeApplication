@@ -12,6 +12,7 @@ namespace CrossExchange.Controller
     [Route("api/Trade")]
     public class TradeController : ControllerBase
     {
+
         private IShareRepository _shareRepository { get; set; }
         private ITradeRepository _tradeRepository { get; set; }
         private IPortfolioRepository _portfolioRepository { get; set; }
@@ -48,6 +49,41 @@ namespace CrossExchange.Controller
         Hint: You need to group the total shares bought and sold of a particular share and see the difference to figure out if there are sufficient quantities available for SELL. 
 
         *************************************************************************************************************************************/
+        [HttpPost]
+        [Route("BuyShare", Name = "BuyShare")]
+        public async Task<IActionResult> BuyShare([FromBody]TradeModel trade)
+        {
+            bool bought = false;
+
+            if (ModelState.IsValid)
+            {
+                bought = _tradeRepository.BuyShare(trade);
+
+                if (bought)
+                {
+                    return Ok(bought);
+                }
+            }          
+            return BadRequest();
+        }
+
+        [HttpPost]
+        [Route("SellShare", Name = "SellShare")]
+        public async Task<IActionResult> SellShare([FromBody]TradeModel trade)
+        {
+            bool sold = false;
+
+            if (ModelState.IsValid)
+            {
+                sold = _tradeRepository.SellShare(trade);
+
+                if (sold)
+                {
+                    return Ok(sold);
+                }
+            }
+            return BadRequest();
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]TradeModel model)

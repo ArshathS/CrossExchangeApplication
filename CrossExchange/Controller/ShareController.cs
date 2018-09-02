@@ -38,7 +38,7 @@ namespace CrossExchange.Controller
                 return BadRequest(ModelState);
             }
 
-            await _shareRepository.InsertAsync(value);
+             _shareRepository.InsertAsync(value);
 
             return Created($"Share/{value.Id}", value);
         }

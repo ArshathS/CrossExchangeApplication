@@ -16,5 +16,9 @@ namespace CrossExchange
         [Required]
         [RegularExpression("BUY|SELL")]
         public string Action { get; set; }
+
+        public int ShareId { get; set; }
+
+        public decimal Price { get; set; }
     }
 }
